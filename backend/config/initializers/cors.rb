@@ -1,0 +1,16 @@
+# Be sure to restart your server when you modify this file.
+
+Rails.application.config.middleware.insert_before 0, Rack::Cors do
+  allow do
+    origins ENV.fetch("FRONTEND_URL", "http://localhost:5173")
+
+    resource "/graphql",
+      headers: :any,
+      methods: %i[post options],
+      expose: ["Authorization"]
+
+    resource "/sidekiq",
+      headers: :any,
+      methods: :any
+  end
+end
